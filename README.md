@@ -128,37 +128,9 @@ python -m crypto_mcp_server.server
 
 The server implements the Model Context Protocol and can be integrated with MCP-compatible clients. It communicates via stdio using the MCP protocol.
 
-### Example Client Usage
 
-```python
-import asyncio
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
+         
 
-async def main():
-    server_params = StdioServerParameters(
-        command="python",
-        args=["main.py"]
-    )
-    
-    async with stdio_client(server_params) as (read, write):
-        async with ClientSession(read, write) as session:
-            await session.initialize()
-            
-            # List available tools
-            tools = await session.list_tools()
-            print(f"Available tools: {[t.name for t in tools]}")
-            
-            # Get ticker data
-            result = await session.call_tool(
-                "get_ticker",
-                arguments={"symbol": "BTC/USDT", "exchange": "binance"}
-            )
-            print(result)
-
-if __name__ == "__main__":
-    asyncio.run(main())
-```
 
 ## 📚 API Documentation
 
